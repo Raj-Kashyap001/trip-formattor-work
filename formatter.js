@@ -72,7 +72,7 @@
     if (lines.length === 0) return "";
     
     if (lines.length >= 2) {
-       let output = `${lines[0]} ${lines[1]} Vehicles In Trip`;
+       let title = lines[0];
        
        let data = [];
        let offlineCount = 0;
@@ -104,6 +104,16 @@
            data.push({ key: "Stopped", val: offlineCount });
          }
        }
+
+       let totalCount = 0;
+       for (let item of data) {
+         let k = String(item.key).toLowerCase();
+         if (k === "running" || k === "stopped") {
+           totalCount += parseInt(item.val, 10) || 0;
+         }
+       }
+
+       let output = `${title} ${totalCount} Vehicles In Trip`;
 
        for (let item of data) {
          if (item.val !== "") {

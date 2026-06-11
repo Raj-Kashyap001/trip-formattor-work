@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Statements</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div>
+        <h1>Driver Statements</h1>
+        <p>Add, edit, or remove Hinglish statements used by the popup.</p>
+      </div>
+      <button type="button" id="reset-defaults">Reset defaults</button>
+    </header>
+
+    <section class="editor">
+      <h2 id="form-title">Add Statement</h2>
+      <input type="hidden" id="statement-id">
+
+      <label for="statement-name">Topic</label>
+      <input type="text" id="statement-name" placeholder="Overheat">
+
+      <label for="statement-text">Description</label>
+      <textarea id="statement-text" placeholder="Gadi overheat ho gayi hai, isliye ruki hui hai."></textarea>
+
+      <div class="form-actions">
+        <button type="button" id="save-statement">Save statement</button>
+        <button type="button" id="cancel-edit">Cancel</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="statement-list" id="statement-list" aria-label="Saved driver statements"></section>
+  </main>
+
+  <script src="driver-statements.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Trip Formatter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main class="app">
+        <header>
+            <h1>Trip Formatter</h1>
+            <p>Clean trip halt text for WhatsApp.</p>
+        </header>
+
+        <section class="formatter-panel">
+            <label for="input">Input</label>
+            <textarea name="input" id="input" placeholder="Paste dirty trip text here"></textarea>
+
+            <label for="output">Output</label>
+            <textarea name="output" id="output" placeholder="Formatted text appears here" readonly></textarea>
+
+            <div class="actions">
+                <button type="button" id="reset">Reset</button>
+                <button type="button" id="copy">Copy Output</button>
+            </div>
+
+            <p class="status" id="status" role="status" aria-live="polite"></p>
+        </section>
+
+        <aside class="driver-panel" aria-labelledby="driver-title">
+            <div class="driver-heading">
+                <h2 id="driver-title">Driver Statements</h2>
+                <span>Optional</span>
+            </div>
+            <div class="driver-list" id="driver-list"></div>
+            <button type="button" class="manage-statements" id="manage-statements">Manage statements</button>
+        </aside>
+    </main>
+
+    <script src="formatter.js"></script>
+    <script src="driver-statements.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

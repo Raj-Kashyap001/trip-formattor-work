@@ -1,0 +1,169 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #17202a;
+  background: #f6f7f9;
+  font-family: Arial, sans-serif;
+}
+
+.page {
+  width: min(920px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 40px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+header p {
+  margin-top: 4px;
+  color: #5d6978;
+  font-size: 14px;
+}
+
+.editor,
+.statement-card {
+  border: 1px solid #d5dbe2;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.editor {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.editor h2 {
+  font-size: 16px;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #364252;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid #c9d0d8;
+  border-radius: 6px;
+  padding: 9px;
+  color: #17202a;
+  background: #ffffff;
+  font: 14px/1.4 Arial, sans-serif;
+  outline: none;
+}
+
+textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #20744a;
+  box-shadow: 0 0 0 3px rgba(32, 116, 74, 0.15);
+}
+
+button {
+  min-height: 36px;
+  border: 1px solid #b9c2cc;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #17202a;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #edf1f4;
+}
+
+#save-statement {
+  border-color: #20744a;
+  background: #20744a;
+  color: #ffffff;
+}
+
+#save-statement:hover {
+  background: #185c3a;
+}
+
+.danger {
+  border-color: #c34545;
+  color: #9d2e2e;
+}
+
+.danger:hover {
+  background: #fff1f1;
+}
+
+.form-actions,
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.statement-list {
+  display: grid;
+  gap: 10px;
+}
+
+.statement-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: start;
+  padding: 14px;
+}
+
+.statement-content {
+  display: grid;
+  gap: 5px;
+}
+
+.statement-content h2 {
+  font-size: 15px;
+}
+
+.statement-content p {
+  color: #475467;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.status {
+  min-height: 16px;
+  color: #20744a;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  header,
+  .statement-card {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+}

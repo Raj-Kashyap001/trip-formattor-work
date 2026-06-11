@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json.schemastore.org/chrome-manifest",
+  "name": "Trip Formatter",
+  "description": "Format dirty trip halt text and copy it for WhatsApp.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["contextMenus", "activeTab", "clipboardWrite", "scripting", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon-16.png",
+      "24": "icon-24.png",
+      "32": "icon-32.png"
+    },
+    "default_popup": "index.html"
+  },
+  "options_page": "options.html",
+  "commands": {
+    "format-selection": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Format selected trip text and copy it"
+    },
+    "format-live-trip": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Format as live trip info"
+    },
+    "quick-snip": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      },
+      "description": "Copy current page screenshot to clipboard"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["formatter.js", "content.js"]
+    }
+  ]
+}

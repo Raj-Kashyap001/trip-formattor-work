@@ -73,13 +73,46 @@
     
     if (lines.length >= 2) {
        let output = `${lines[0]} ${lines[1]} Vehicles In Trip`;
+       
+       let data = [];
+       let offlineCount = 0;
+       let stoppedIndex = -1;
+
        for (let i = 2; i < lines.length; i += 2) {
          if (i + 1 < lines.length) {
-           output += `\n${lines[i]} ${lines[i+1]}`;
+           let key = lines[i];
+           let val = lines[i+1];
+           
+           if (key.toLowerCase() === "offline") {
+             offlineCount += parseInt(val, 10) || 0;
+           } else {
+             if (key.toLowerCase() === "stopped") {
+               stoppedIndex = data.length;
+             }
+             data.push({ key, val });
+           }
          } else {
-           output += `\n${lines[i]}`;
+           data.push({ key: lines[i], val: "" });
          }
        }
+
+       if (offlineCount > 0) {
+         if (stoppedIndex !== -1) {
+           let currentVal = parseInt(data[stoppedIndex].val, 10) || 0;
+           data[stoppedIndex].val = currentVal + offlineCount;
+         } else {
+           data.push({ key: "Stopped", val: offlineCount });
+         }
+       }
+
+       for (let item of data) {
+         if (item.val !== "") {
+           output += `\n${item.key} ${item.val}`;
+         } else {
+           output += `\n${item.key}`;
+         }
+       }
+
        return output;
     }
     return lines.join("\n");

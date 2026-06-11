@@ -1,12 +1,7 @@
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-    id: "format-trip-selection",
-    title: "Format trip text and copy",
-    contexts: ["selection"]
-  });
-  chrome.contextMenus.create({
-    id: "format-live-trip",
-    title: "Format as live trip info",
+    id: "smart-format-trip",
+    title: "Format Trip Selection / Live Info",
     contexts: ["selection"]
   });
 });
@@ -48,10 +43,8 @@ async function captureAndCopyScreenshot(tabId, windowId) {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (!tab?.id) return;
 
-  if (info.menuItemId === "format-trip-selection") {
-    sendFormatMessage(tab.id, "FORMAT_TRIP_SELECTION", info.selectionText || "");
-  } else if (info.menuItemId === "format-live-trip") {
-    sendFormatMessage(tab.id, "FORMAT_LIVE_TRIP", info.selectionText || "");
+  if (info.menuItemId === "smart-format-trip") {
+    sendFormatMessage(tab.id, "FORMAT_SMART", info.selectionText || "");
   }
 });
 
@@ -60,9 +53,9 @@ chrome.commands.onCommand.addListener(async (command) => {
   if (!tab?.id) return;
 
   if (command === "format-selection") {
-    sendFormatMessage(tab.id, "FORMAT_TRIP_SELECTION", "");
+    sendFormatMessage(tab.id, "FORMAT_SMART", "");
   } else if (command === "format-live-trip") {
-    sendFormatMessage(tab.id, "FORMAT_LIVE_TRIP", "");
+    sendFormatMessage(tab.id, "FORMAT_SMART", "");
   } else if (command === "quick-snip") {
     captureAndCopyScreenshot(tab.id, tab.windowId);
   }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Trip Formatter - Test Page</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        section { margin-bottom: 40px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        h2 { margin-top: 0; color: #2c3e50; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; white-space: pre-wrap; }
+        .test-controls { margin-top: 10px; }
+        button { padding: 8px 16px; cursor: pointer; background: #27ae60; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #219150; }
+        .result-box { margin-top: 15px; padding: 10px; background: #e8f6f3; border-left: 5px solid #27ae60; display: none; }
+    </style>
+</head>
+<body>
+    <h1>WhatsApp Trip Formatter Test Suite</h1>
+
+    <section id="trip-selection-test">
+        <h2>1. Trip Selection Formatting</h2>
+        <p>Select the text below and use "Smart Format" from context menu:</p>
+        <pre id="trip-text">
+Vehicle :- RJ14GB1234
+Trip No.:- 98765
+Route :- Jaipur to Delhi
+Start : 2026-06-11 08:00 AM
+End : 2026-06-11 02:00 PM
+Duration : 6 Hours
+Address : Delhi Main Gate
+Lat-Lng : 28.6139, 77.2090
+        </pre>
+        <div class="test-controls">
+            <button onclick="testFormat('trip-text', 'FORMAT_TRIP_SELECTION')">Format Trip Selection</button>
+        </div>
+    </section>
+
+    <section id="live-trip-test">
+        <h2>2. Live Trip Formatting</h2>
+        <p>Select the text below and use "Smart Format" from context menu:</p>
+        <pre id="live-text">
+Mine To Plant Summary
+10
+Running
+5
+Stopped
+4
+Offline
+1
+        </pre>
+        <div class="test-controls">
+            <button onclick="testFormat('live-text', 'FORMAT_LIVE_TRIP')">Format Live Trip</button>
+        </div>
+    </section>
+
+    <div id="output-display" class="result-box">
+        <strong>Formatted Result (Copied to Clipboard):</strong>
+        <pre id="output-content"></pre>
+    </div>
+
+    <!-- Scripts for local testing if extension is not active -->
+    <script src="../formatter.js"></script>
+    <script>
+        function testFormat(elementId, type) {
+            const rawText = document.getElementById(elementId).innerText;
+            let formatted = "";
+            
+            if (type === 'FORMAT_TRIP_SELECTION') {
+                formatted = WhatsAppTripFormatter.formatTripText(rawText);
+            } else if (type === 'FORMAT_LIVE_TRIP') {
+                formatted = WhatsAppTripFormatter.formatLiveTrip(rawText);
+            } else {
+                formatted = WhatsAppTripFormatter.smartFormat(rawText);
+            }
+
+            const outputDisplay = document.getElementById('output-display');
+            const outputContent = document.getElementById('output-content');
+            
+            outputContent.innerText = formatted;
+            outputDisplay.style.display = 'block';
+            
+            console.log("Formatted Output:\n", formatted);
+            
+            // Try to copy to clipboard for full simulation
+            navigator.clipboard.writeText(formatted).then(() => {
+                alert("Formatted text copied to clipboard!");
+            }).catch(err => {
+                console.error("Clipboard copy failed", err);
+            });
+        }
+    </script>
+</body>
+</html>

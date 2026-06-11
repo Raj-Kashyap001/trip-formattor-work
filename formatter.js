@@ -113,7 +113,7 @@
          }
        }
 
-       let output = `${title} ${totalCount} Vehicles In Trip`;
+       let output = `*${title} ${totalCount} Vehicles In Trip*`;
 
        for (let item of data) {
          if (item.val !== "") {
@@ -128,5 +128,28 @@
     return lines.join("\n");
   }
 
-  global.WhatsAppTripFormatter = { formatTripText, formatLiveTrip };
+  function smartFormat(rawText) {
+    const text = String(rawText || "").trim();
+    if (!text) return "";
+
+    // If it contains "Vehicle :-" or "Trip No :-", it's likely a Trip Selection
+    if (/Vehicle\s*:-|Trip\s+No\.?\s*:-/i.test(text)) {
+      return formatTripText(text);
+    }
+
+    // Otherwise, try Live Trip formatting
+    // A live trip snippet usually has many lines and specific keywords
+    if (text.split("\n").length >= 2) {
+        const formattedLive = formatLiveTrip(text);
+        // If it actually formatted something (added "Vehicles In Trip")
+        if (formattedLive.includes("Vehicles In Trip")) {
+            return formattedLive;
+        }
+    }
+
+    // Fallback to Trip Text (which has a generic fallback)
+    return formatTripText(text);
+  }
+
+  global.WhatsAppTripFormatter = { formatTripText, formatLiveTrip, smartFormat };
 })(typeof globalThis !== "undefined" ? globalThis : window);

@@ -95,6 +95,21 @@
       return;
     }
 
+    if (message?.type === "FORMAT_SMART") {
+      const sourceText = getSelectedText() || message.selectionText;
+      const formatted = WhatsAppTripFormatter.smartFormat(sourceText);
+
+      if (!formatted) {
+        showToast("No valid trip text found to format");
+        return;
+      }
+
+      copyText(formatted)
+        .then(() => showToast(`Copied formatted text\n\n${formatted}`))
+        .catch(() => showToast("Copy failed"));
+      return;
+    }
+
     if (message?.type === "FORMAT_TRIP_SELECTION") {
       const sourceText = getSelectedText() || message.selectionText;
       const formatted = WhatsAppTripFormatter.formatTripText(sourceText);

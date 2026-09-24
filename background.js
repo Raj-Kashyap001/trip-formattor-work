@@ -37,6 +37,14 @@ async function captureAndCopyScreenshot(tabId, windowId) {
     });
   } catch (error) {
     console.error("Screenshot failed:", error);
+    try {
+      await chrome.tabs.sendMessage(tabId, {
+        type: "SHOW_TOAST",
+        message: `Screenshot failed: ${error?.message || error}`
+      });
+    } catch (toastError) {
+      // The tab may not have the content script (about:/PDF pages).
+    }
   }
 }
 

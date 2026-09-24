@@ -6,22 +6,22 @@
     {
       id: "driver-overheat",
       name: "Overheat",
-      text: "Gadi overheat ho gayi hai, isliye ruki hui hai."
-    },
-    {
-      id: "driver-tyre",
-      name: "Tyre issue",
-      text: "Gadi me tyre ki problem hai, driver use theek karwa raha hai."
+      text: "Driver Statement:- Gadi overheat ho gayi hai, isliye ruki hui hai."
     },
     {
       id: "driver-food",
       name: "Food halt",
-      text: "Driver khane ke liye ruka hai, thodi der me gadi aage niklegi."
+      text: "Driver Statement:- Driver khane ke liye ruka hai."
     },
     {
       id: "driver-no-response",
       name: "No response",
-      text: "Driver se contact karne ki koshish ki gayi, lekin abhi call receive nahi hua."
+      text: "Note:- Driver ko multiple times call lagaya gaya lekin phone nahi uthaye."
+    },
+    {
+      id: "offline-vehicle",
+      name: "Offline",
+      text: "Vehicle [vehicle number] got offline on date[] time[], from the location[detail] and vehicle movement not being tracked. It may be device issue or ignition problem. Action: Please verify the seal/tarpaulin once it get reached on destination."
     }
   ];
 

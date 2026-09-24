@@ -21,9 +21,21 @@ function updateOutput() {
   const formatted = WhatsAppTripFormatter.formatTripText(input.value);
   const selectedStatement = driverStatements.find((statement) => statement.id === selectedDriverStatementId);
 
+  if (!selectedStatement) {
+    output.value = formatted;
+    return;
+  }
+
+  const isSpecial = DriverStatementStore.isSpecial(selectedStatement);
+  const statementText = isSpecial
+    ? WhatsAppTripFormatter.buildOfflineStatement(input.value)
+    : selectedStatement.text;
+
   output.value =
-    formatted && selectedStatement
-      ? `${formatted}\n*${selectedStatement.text}*`
+    formatted || isSpecial
+      ? formatted
+        ? `${formatted}\n*${statementText}*`
+        : `*${statementText}*`
       : formatted;
 }
 
@@ -55,7 +67,9 @@ function renderDriverStatements() {
 
     const name = document.createElement("span");
     name.className = "driver-name";
-    name.textContent = `${statement.name} ->`;
+    name.textContent = DriverStatementStore.isSpecial(statement)
+      ? `${statement.name} (auto) ->`
+      : `${statement.name} ->`;
 
     const text = document.createElement("span");
     text.className = "driver-text";
@@ -125,7 +139,7 @@ manageStatementsButton.addEventListener("click", () => {
 
 resetButton.addEventListener("click", () => {
   input.value = "";
-  output.value = "";
+  updateOutput();
   input.focus();
   setStatus("Reset");
 });

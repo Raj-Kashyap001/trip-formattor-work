@@ -128,6 +128,37 @@
     return lines.join("\n");
   }
 
+  function extractOfflineFields(rawText) {
+    const text = String(rawText || "").replace(/\r\n/g, "\n").trim();
+    if (!text) {
+      return { vehicle: "", dateTime: "", location: "" };
+    }
+
+    const vehicle = pick(/Vehicle\s*:-\s*(.*?)(?=Trip\s+No\.?\s*:-|\n|$)/is, text);
+    const dateTime =
+      pick(/^\s*End\s*:\s*(.*?)(?=\n|$)/im, text) ||
+      pickField("End", ["Duration", "Address", "Lat-Lng"], text);
+    const location =
+      pick(/^\s*Address\s*:\s*(.*?)(?=\n\s*Lat-Lng\s*:|$)/ims, text) ||
+      pickField("Address", ["Lat-Lng"], text);
+
+    return { vehicle, dateTime, location };
+  }
+
+  function buildOfflineStatement(rawText) {
+    const { vehicle, dateTime, location } = extractOfflineFields(rawText);
+
+    let head = vehicle ? `Vehicle ${vehicle} got offline` : "Vehicle got offline";
+    if (dateTime) head += ` on ${dateTime}`;
+    if (location) head += ` from the location ${location}`;
+
+    return (
+      `${head} and vehicle movement is not being tracked. ` +
+      "It may be device issue or ignition problem. " +
+      "Action: Please verify the seal/tarpaulin once it get reached on destination."
+    );
+  }
+
   function smartFormat(rawText) {
     const text = String(rawText || "").trim();
     if (!text) return "";
@@ -151,5 +182,11 @@
     return formatTripText(text);
   }
 
-  global.WhatsAppTripFormatter = { formatTripText, formatLiveTrip, smartFormat };
+  global.WhatsAppTripFormatter = {
+    formatTripText,
+    formatLiveTrip,
+    smartFormat,
+    extractOfflineFields,
+    buildOfflineStatement
+  };
 })(typeof globalThis !== "undefined" ? globalThis : window);

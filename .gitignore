@@ -1,3 +1,5 @@
 /test/
 *.zip
+*.crx
+*.pem
 .DS_Store

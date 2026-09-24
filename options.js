@@ -42,6 +42,18 @@ function renderStatements() {
     const text = document.createElement("p");
     text.textContent = statement.text;
 
+    content.append(title, text);
+
+    if (DriverStatementStore.isSpecial(statement)) {
+      const badge = document.createElement("span");
+      badge.className = "statement-badge";
+      badge.textContent = "Fixed · auto-filled from input";
+      content.append(badge);
+      item.append(content);
+      list.append(item);
+      return;
+    }
+
     const actions = document.createElement("div");
     actions.className = "card-actions";
 
@@ -62,6 +74,11 @@ function renderStatements() {
     removeButton.className = "danger";
     removeButton.textContent = "Remove";
     removeButton.addEventListener("click", async () => {
+      if (DriverStatementStore.isSpecial(statement)) {
+        setStatus("Offline statement is fixed");
+        return;
+      }
+
       statements = statements.filter((itemToKeep) => itemToKeep.id !== statement.id);
       await DriverStatementStore.saveStatements(statements);
 
@@ -94,6 +111,11 @@ saveButton.addEventListener("click", async () => {
 
   if (!name || !text) {
     setStatus("Topic and description are required");
+    return;
+  }
+
+  if (id && DriverStatementStore.isSpecial(statements.find((statement) => statement.id === id))) {
+    setStatus("Offline statement is fixed");
     return;
   }
 

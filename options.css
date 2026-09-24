@@ -154,6 +154,16 @@ button:hover {
   line-height: 1.45;
 }
 
+.statement-badge {
+  justify-self: start;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #eef2f6;
+  color: #344054;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 .status {
   min-height: 16px;
   color: #20744a;
